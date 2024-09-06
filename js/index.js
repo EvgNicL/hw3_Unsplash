@@ -8,7 +8,8 @@ const photos =  loadRandomPhoto();
 
     main.addEventListener('click', function (e) {
         const icon = e.target.classList.contains('click');
-        let likes =document.querySelector('.count-likes');
+        const likes = countLikes;
+        // const likes =document.querySelector('#countLikes');
         const url = document.querySelector('.img').src;
        
         if (icon) {

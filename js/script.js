@@ -3,7 +3,7 @@
 export const main = document.querySelector(".main");
 const currentDate = new Date();
 let startNumberDate = 249;
-let currentIndexHistory = 0;
+let currentHistoryIndex = 0;
 let photos;    
   
 // Вычислить номер текущего дня
@@ -30,7 +30,7 @@ async function fetchPhotos() {
 function insertHTML(photo) {
    main.insertAdjacentHTML(
      "afterbegin",
-     ` <div>
+     ` <div data-id="${photo.id}">
          <div class="container-img">
            <img class="img" src="${
              photo.urls.small
@@ -40,10 +40,15 @@ function insertHTML(photo) {
          </div>
          <div class="likes-box">
            <img src="../finger_top_icon.png" class="icon click" alt="icon" width="35px">
-           <p class="count-likes">Количество лайков: ${photo.likes}</p>
+           <p id="countLikes">Количество лайков: ${photo.likes}</p>
          </div>
        </div>
    `);
+   if (isPhotoInHistory(photo) === true) {
+    const el = getHistory().find(el => el.id === photo.id);
+    console.log(countLikes.textContent);
+    countLikes.textContent = `Количество лайков: ${el.likes}`;
+   };   
 };
 
 // Загрузка рандомного фото на этот день

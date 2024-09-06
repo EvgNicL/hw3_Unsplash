@@ -1,0 +1,40 @@
+.main {
+    width: 400px;
+    background-color: #f5eeee;
+    margin: 30px auto 0 auto;
+    align-items: center;
+  }
+  .likes-box {
+    margin: 0px 20px 10px 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+  }
+  .container-img {
+    padding: 10px;
+  }
+  .container-img img {
+    width: 100%;
+  }
+  .icon {
+    transition: all 0.3s;
+    animation-name: puls;
+    animation-duration: 1s;
+    animation-iteration-count: infinite;
+  }
+  .icon:hover {
+    transform: scale(1.2);
+  }
+  @keyframes puls {
+    from {
+      width: 35px;
+    }
+    to {
+      transform: scale(1.2);
+    }
+  }
+  .button-box {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+  }

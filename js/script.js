@@ -3,16 +3,15 @@
 export const main = document.querySelector(".main");
 const currentDate = new Date();
 let startNumberDate = 249;
-let currentHistoryIndex = 0;
 let photos;    
   
-// Вычислить номер текущего дня
+/**Вычислить номер текущего дня*/
 function getNumberOfCurrentDate (date) {
     const num = Math.floor((date - new Date(date.getFullYear(), 0, 0)) / 1000 / 60 / 60 / 24);
     return num;
 };
 
-// Загрузка данных с Unsplash
+/**Загрузка данных с Unsplash*/
 async function fetchPhotos() {
     try {
       const response = await fetch(
@@ -26,7 +25,7 @@ async function fetchPhotos() {
     };
 };
 
-// Загрузка данных в HTML
+/**Загрузка данных в HTML*/
 export function insertHTML(photo) {
    main.insertAdjacentHTML(
      "afterbegin",
@@ -50,7 +49,7 @@ export function insertHTML(photo) {
    };   
 };
 
-// Загрузка рандомного фото на этот день
+/**Загрузка рандомного фото на этот день*/
 export async function loadRandomPhoto() {
     if (localStorage.getItem('startNumberDate')) startNumberDate = localStorage.getItem('startNumberDate');
     photos = await fetchPhotos();
@@ -65,7 +64,7 @@ export async function loadRandomPhoto() {
     };
 };
 
-// Получить историю из localStorage
+/**Получить историю из localStorage*/
 function getHistory () {
     if (localStorage.getItem("photoHistory")) {
       const history = JSON.parse(localStorage.getItem("photoHistory"));
@@ -73,7 +72,7 @@ function getHistory () {
     } else return [];
 };
 
-// Изменить количество лайков в истории
+/**Изменить количество лайков в истории*/
 export function changeHistory (url, likes) {                  
     let history = getHistory();
     try {
@@ -89,7 +88,7 @@ export function changeHistory (url, likes) {
     
 };
 
-// Проверка, есть ли в истории такое фото
+/**Проверка, есть ли в истории такое фото*/
 function isPhotoInHistory (photo) {
     const history = getHistory();
     let isPhoto = false;
@@ -101,7 +100,7 @@ function isPhotoInHistory (photo) {
     return isPhoto;
 };
 
-// Добавить фото в историю
+/**Добавить фото в историю*/
 function addPhotoToHistory (photo) {
     const history = getHistory();
     if (history.length > 30) {
@@ -119,7 +118,7 @@ function addPhotoToHistory (photo) {
     localStorage.setItem("photoHistory", JSON.stringify(history));
 };
 
-// Получить индекс текущего снимка из истории
+/**Получить индекс текущего снимка из истории*/
 function getCurrentHistoryIndex (idPh) {
   const history = getHistory();
   let index = 0;
@@ -132,7 +131,7 @@ function getCurrentHistoryIndex (idPh) {
   return index;
 };
 
-
+/**Показать фото из истории в HTML */
 function showHistory (photo) {
   main.firstElementChild.remove();
   main.insertAdjacentHTML(
@@ -152,6 +151,7 @@ function showHistory (photo) {
       </div>
   `);
 };
+
 
 export function handleLeft (idPh) {
   const i = getCurrentHistoryIndex(idPh); 

@@ -27,7 +27,7 @@ async function fetchPhotos() {
 };
 
 // Загрузка данных в HTML
-function insertHTML(photo) {
+export function insertHTML(photo) {
    main.insertAdjacentHTML(
      "afterbegin",
      ` <div data-id="${photo.id}">
@@ -46,7 +46,6 @@ function insertHTML(photo) {
    `);
    if (isPhotoInHistory(photo) === true) {
     const el = getHistory().find(el => el.id === photo.id);
-    console.log(countLikes.textContent);
     countLikes.textContent = `Количество лайков: ${el.likes}`;
    };   
 };
@@ -120,4 +119,52 @@ function addPhotoToHistory (photo) {
     localStorage.setItem("photoHistory", JSON.stringify(history));
 };
 
+// Получить индекс текущего снимка из истории
+function getCurrentHistoryIndex (idPh) {
+  const history = getHistory();
+  let index = 0;
 
+  history.forEach(el => {
+    if (idPh === el.id) {
+      index = history.indexOf(el);
+    };
+  });
+  return index;
+};
+
+
+function showHistory (photo) {
+  main.firstElementChild.remove();
+  main.insertAdjacentHTML(
+    "afterbegin",
+    ` <div data-id="${photo.id}">
+        <div class="container-img">
+          <img class="img" src="${
+            photo.url
+          }" alt="photo">
+          <h4>${photo.description}</h4>
+          <p>${photo.created}</p>
+        </div>
+        <div class="likes-box">
+          <img src="../finger_top_icon.png" class="icon click" alt="icon" width="35px">
+          <p id="countLikes">Количество лайков: ${photo.likes}</p>
+        </div>
+      </div>
+  `);
+};
+
+export function handleLeft (idPh) {
+  const i = getCurrentHistoryIndex(idPh); 
+  const history = getHistory();
+  showHistory(history[i - 1]);  
+  if (i === 1) left.setAttribute('disabled', '');
+  if (right.hasAttribute('disabled')) right.removeAttribute('disabled');
+};
+
+export function handleRight (idPh) {
+  const i = getCurrentHistoryIndex(idPh); 
+  const history = getHistory();
+  showHistory(history[i + 1]); 
+  if (i === history.length - 2) right.setAttribute('disabled', '');
+  if (left.hasAttribute('disabled')) left.removeAttribute('disabled');
+};
